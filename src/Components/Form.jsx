@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Button, Grid, Card, Typography, makeStyles } from '@material-ui/core';
 
 import InputField from './InputField';
+import { getRandomString } from './../Utils'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -33,14 +34,14 @@ const ContactForm = ({
   handleAddContact
 }) => {
   const classes = useStyles()
-  const [firstNameValue, setFirstNameValue] = useState('')
-  const [lastNameValue, setLastNameValue] = useState('')
-  const [countryCodeValue, setCountryCodeValue] = useState('')
-  const [phoneValue, setPhoneValue] = useState('')
+  const [firstNameValue, setFirstNameValue] = useState(firstName)
+  const [lastNameValue, setLastNameValue] = useState(lastName)
+  const [countryCodeValue, setCountryCodeValue] = useState(countryCode)
+  const [phoneValue, setPhoneValue] = useState(phone)
 
   const onSubmit = (event) => {
     const contact = {
-      id: Math.random(),
+      id: id || getRandomString(),
       firstName: firstNameValue,
       lastName: lastNameValue,
       countryCode: countryCodeValue,
@@ -61,7 +62,7 @@ const ContactForm = ({
               label="First Name"
               autoFocus
               name="firstNameValue"
-              value={firstName || firstNameValue}
+              value={firstNameValue}
               onChange={event => setFirstNameValue(event.target.value)}
             />
           </Grid>
@@ -70,7 +71,7 @@ const ContactForm = ({
               required
               label="Last Name"
               name="lastNameValue"
-              value={lastName || lastNameValue}
+              value={lastNameValue}
               onChange={event => setLastNameValue(event.target.value)}
             />
           </Grid>
@@ -79,7 +80,7 @@ const ContactForm = ({
               required
               label="Country Code"
               name="countryCodeValue"
-              value={countryCode || countryCodeValue}
+              value={countryCodeValue}
               onChange={event => setCountryCodeValue(event.target.value)}
             />
           </Grid>
@@ -88,7 +89,7 @@ const ContactForm = ({
               required
               label="Phone Number"
               name="phoneValue"
-              value={phone || phoneValue}
+              value={phoneValue}
               onChange={event => setPhoneValue(event.target.value)}
             />
           </Grid>

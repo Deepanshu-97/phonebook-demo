@@ -18,30 +18,6 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-
-const contacts = [
-  {
-    id: "111",
-    firstName: "Martin",
-    lastName: "Grill",
-    countryCode: "+1",
-    phone: "1234567890",
-  },
-  {
-    id: "222",
-    firstName: "John",
-    lastName: "Don",
-    countryCode: "+41",
-    phone: "9378628381",
-  },
-  {
-    id: "222",
-    firstName: "Ricky",
-    lastName: "Cage",
-    countryCode: "+12",
-    phone: "3245678902",
-  }
-]
 const PhoneBook = (props) => {
   const classes = useStyles()
 
@@ -69,9 +45,17 @@ const PhoneBook = (props) => {
       phone: "3245678902",
     }
   ])
+  const [isEdit, setIsEdit] = useState(false)
+  const [oldContact, setOldContact] = useState({})
 
   const handleEdit = (id) => {
-    console.log('edit--------', id)
+    let rowData = contacts.filter((person) => {
+      return person.id === id
+    })[0]
+
+    setIsEdit(true)
+    setOldContact(rowData)
+    handleOpen()
   }
 
   const handleDelete = (id) => {
@@ -83,15 +67,26 @@ const PhoneBook = (props) => {
   }
 
   const handleAddContact = (contact) => {
-    console.log('Add Contact-------', contact)
-    setContacts(() => [...contacts, contact])
+    if (isEdit) {
+      const updatedContact = contacts.filter((person) => {
+        return person.id !== contact.id
+      });
+
+      setContacts(() => [...updatedContact, contact])
+    } else {
+      setContacts(() => [...contacts, contact])
+    }
+
+    handleClose()
   }
 
   const handleOpen = () => {
     setOpen(true)
   }
+
   const handleClose = () => {
     setOpen(false)
+    setOldContact({})
   }
 
   return (
@@ -121,13 +116,14 @@ const PhoneBook = (props) => {
         handleClose={handleClose}
       >
         <ContactForm
-          id={null}
-          firstName={null}
-          lastName={null}
-          countryCode={null}
-          phone={null}
-          submitActionText={'Submit'}
+          id={isEdit ? oldContact.id : ''}
+          firstName={isEdit ? oldContact.firstName : ''}
+          lastName={isEdit ? oldContact.lastName : ''}
+          countryCode={isEdit ? oldContact.countryCode : ''}
+          phone={isEdit ? oldContact.phone : ''}
+          submitActionText={isEdit ? 'Update' : 'Submit'}
           handleAddContact={handleAddContact}
+          isEdit={isEdit}
         />
       </Modal>
     </Container>
