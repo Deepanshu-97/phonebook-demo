@@ -1,9 +1,6 @@
 import React from 'react';
+import PhoneBook from './PhoneBook'
 
-function App() {
-  return (
-    <div>Phone Book</div>
-  );
-}
+const App = () => <PhoneBook />
 
 export default App;
