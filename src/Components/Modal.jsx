@@ -1,9 +1,9 @@
 import React from 'react'
 import { Button, Dialog, DialogContent, DialogTitle, DialogActions } from "@material-ui/core"
+import PropTypes from 'prop-types';
 
 const Modal = ({
   open,
-  handleSubmit,
   handleClose,
   title,
   children
@@ -23,6 +23,13 @@ const Modal = ({
       </Dialog>
     </div >
   )
+}
+
+Modal.propTypes = {
+  open:PropTypes.bool,
+  handleClose:PropTypes.func.isRequired,
+  title:PropTypes.string,
+  children:PropTypes.node
 }
 
 export default Modal

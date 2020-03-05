@@ -3,6 +3,7 @@ import { ListItem, Avatar, ListItemAvatar, Typography, ListItemText, Button } fr
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles(theme => ({
   inline: {
@@ -51,5 +52,16 @@ const Contact = ({
     </ListItem>
   )
 }
+
+Contact.propTypes = {
+  id: PropTypes.string,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  countryCode: PropTypes.string,
+  phone: PropTypes.string,
+  avatarUrl: PropTypes.string,
+  handleEdit: PropTypes.func.isRequired,
+  handleDelete: PropTypes.func.isRequired,
+};
 
 export default Contact

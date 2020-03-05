@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Button, Grid, Card, Typography, makeStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
 
 import InputField from './InputField';
 import { getRandomString } from './../Utils'
@@ -108,5 +109,16 @@ const ContactForm = ({
     </Card>
   )
 }
+
+ContactForm.propTypes = {
+  id: PropTypes.string,
+  firstName: PropTypes.string,
+  lastName: PropTypes.string,
+  countryCode: PropTypes.string,
+  title: PropTypes.string,
+  phone: PropTypes.string,
+  submitActionText: PropTypes.string.isRequired,
+  handleAddContact: PropTypes.func.isRequired
+};
 
 export default ContactForm
