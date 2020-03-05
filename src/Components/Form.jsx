@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 import InputField from './InputField';
 import { getRandomString } from './../Utils'
+import { validateContact } from './../validations'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -43,6 +44,7 @@ const ContactForm = ({
   const [lastNameValue, setLastNameValue] = useState(lastName)
   const [countryCodeValue, setCountryCodeValue] = useState(countryCode)
   const [phoneValue, setPhoneValue] = useState(phone)
+  const [errors, setErrors] = useState({})
 
   const onSubmit = (event) => {
     const contact = {
@@ -53,6 +55,11 @@ const ContactForm = ({
       phone: phoneValue,
     }
 
+    const errors = validateContact(contact);
+    if (Object.entries(errors).length) {
+      setErrors(errors)
+      return
+    }
     handleAddContact(contact)
   }
 
@@ -70,6 +77,7 @@ const ContactForm = ({
               name="firstNameValue"
               value={firstNameValue}
               onChange={event => setFirstNameValue(event.target.value)}
+              error={errors.firstName}
             />
           </Grid>
           <Grid item sm={12}>
@@ -80,6 +88,7 @@ const ContactForm = ({
               name="lastNameValue"
               value={lastNameValue}
               onChange={event => setLastNameValue(event.target.value)}
+              error={errors.lastName}
             />
           </Grid>
           <Grid item sm={12}>
@@ -90,6 +99,8 @@ const ContactForm = ({
               name="countryCodeValue"
               value={countryCodeValue}
               onChange={event => setCountryCodeValue(event.target.value)}
+              error={errors.countryCode}
+              placeholder="+91"
             />
           </Grid>
           <Grid item sm={12}>
@@ -100,6 +111,7 @@ const ContactForm = ({
               name="phoneValue"
               value={phoneValue}
               onChange={event => setPhoneValue(event.target.value)}
+              error={errors.phone}
             />
           </Grid>
         </Grid>
