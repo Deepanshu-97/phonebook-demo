@@ -23,7 +23,11 @@ const useStyles = makeStyles(theme => ({
   submit: {
     margin: theme.spacing(2, 0, 2),
   },
-}));
+  inputCountrol: {
+    width: '100%',
+  }
+}))
+
 const ContactForm = ({
   id,
   firstName,
@@ -57,8 +61,9 @@ const ContactForm = ({
       <Typography variant="h4">{title}</Typography>
       <form className={classes.form} noValidate>
         <Grid container spacing={1}>
-          <Grid item sm={6}>
+          <Grid item sm={12}>
             <InputField
+              className={classes.inputCountrol}
               required
               label="First Name"
               autoFocus
@@ -67,8 +72,9 @@ const ContactForm = ({
               onChange={event => setFirstNameValue(event.target.value)}
             />
           </Grid>
-          <Grid item sm={6}>
+          <Grid item sm={12}>
             <InputField
+              className={classes.inputCountrol}
               required
               label="Last Name"
               name="lastNameValue"
@@ -76,8 +82,9 @@ const ContactForm = ({
               onChange={event => setLastNameValue(event.target.value)}
             />
           </Grid>
-          <Grid item sm={6}>
+          <Grid item sm={12}>
             <InputField
+              className={classes.inputCountrol}
               required
               label="Country Code"
               name="countryCodeValue"
@@ -85,8 +92,9 @@ const ContactForm = ({
               onChange={event => setCountryCodeValue(event.target.value)}
             />
           </Grid>
-          <Grid item sm={6}>
+          <Grid item sm={12}>
             <InputField
+              className={classes.inputCountrol}
               required
               label="Phone Number"
               name="phoneValue"

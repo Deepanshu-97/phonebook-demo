@@ -9,6 +9,9 @@ const useStyles = makeStyles(theme => ({
   inline: {
     display: 'inline',
   },
+  bottomBorder: {
+    borderBottom: '1px solid #ececec'
+  }
 }))
 
 const Contact = ({
@@ -23,7 +26,7 @@ const Contact = ({
 }) => {
   const classes = useStyles()
   return (
-    <ListItem alignItems="flex-start">
+    <ListItem alignItems="flex-start" className={classes.bottomBorder}>
       <ListItemAvatar>
         <Avatar alt="" src={avatarUrl} />
       </ListItemAvatar>

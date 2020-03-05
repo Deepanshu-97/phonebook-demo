@@ -9,12 +9,17 @@ import ContactForm from './../Components/Form';
 const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    maxWidth: 360,
     backgroundColor: theme.palette.background.paper,
   },
   addIcon: {
-    width: '150px',
-    height: '150px'
+    width: '40px',
+    height: '40px'
+  },
+  dFlex: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: '0 18px'
   }
 }))
 
@@ -91,11 +96,16 @@ const PhoneBook = (props) => {
 
   return (
     <Container maxWidth="sm">
-      <Typography
-        variant='h5'
-      >
-        Contact List
+      <div className={classes.dFlex}>
+        <Typography
+          variant='h5'
+        >
+          Contact List
       </Typography>
+        <Button onClick={handleOpen}>
+          <PersonAddIcon className={classes.addIcon} />
+        </Button>
+      </div>
       <List className={classes.root}>
         {contacts.map((contact, key) => {
           return <Contact
@@ -106,9 +116,6 @@ const PhoneBook = (props) => {
           />
         })}
       </List>
-      <Button onClick={handleOpen}>
-        <PersonAddIcon className={classes.addIcon} />
-      </Button>
       <Modal
         title={'Add Contact Form'}
         open={open}
