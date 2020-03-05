@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { List, makeStyles, Container, Typography, Button } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
 import Contact from './../Components/Contact'
@@ -52,6 +53,8 @@ const PhoneBook = (props) => {
   ])
   const [isEdit, setIsEdit] = useState(false)
   const [oldContact, setOldContact] = useState({})
+  const [checked, setChecked] = useState([]);
+
 
   const handleEdit = (id) => {
     let rowData = contacts.filter((person) => {
@@ -94,6 +97,30 @@ const PhoneBook = (props) => {
     setOldContact({})
   }
 
+  const deleteMultipleContacts = () => {
+
+    let data = contacts.filter((person) => {
+      return !checked.includes(person.id)
+    })
+
+    console.log(data);
+
+
+    setContacts(() => [...data])
+
+  }
+
+  const handleToggle = value => {
+    const newChecked = checked.filter((ch) => ch === value);
+
+    if (newChecked.length) {
+      const l = checked.filter(ch => ch !== value)
+      setChecked(l)
+    } else {
+      setChecked([...checked, value])
+    }
+  }
+
   return (
     <Container maxWidth="sm">
       <div className={classes.dFlex}>
@@ -113,9 +140,20 @@ const PhoneBook = (props) => {
             {...contact}
             handleEdit={handleEdit}
             handleDelete={handleDelete}
+            handleToggle={handleToggle}
+            checked={checked}
           />
         })}
       </List>
+      {checked.length
+        ? (
+          <Button onClick={deleteMultipleContacts}>
+            <DeleteIcon />
+          </Button>
+
+        )
+        : null
+      }
       <Modal
         title={'Add Contact Form'}
         open={open}

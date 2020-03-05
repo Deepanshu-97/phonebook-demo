@@ -1,5 +1,5 @@
 import React from 'react'
-import { ListItem, Avatar, ListItemAvatar, Typography, ListItemText, Button } from '@material-ui/core';
+import { ListItem, Avatar, ListItemAvatar, Typography, ListItemText, Button, Checkbox, ListItemIcon } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -22,11 +22,21 @@ const Contact = ({
   phone,
   avatarUrl,
   handleEdit,
-  handleDelete
+  handleDelete,
+  handleToggle,
+  checked
 }) => {
   const classes = useStyles()
+
   return (
     <ListItem alignItems="flex-start" className={classes.bottomBorder}>
+      <ListItemIcon>
+        <Checkbox
+          edge="end"
+          onChange={() => handleToggle(id)}
+          checked={checked.indexOf(id) !== -1}
+        />
+      </ListItemIcon>
       <ListItemAvatar>
         <Avatar alt="" src={avatarUrl} />
       </ListItemAvatar>
