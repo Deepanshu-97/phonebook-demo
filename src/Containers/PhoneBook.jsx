@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useReducer } from 'react'
 import { List, makeStyles, Container, Typography, Button } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
@@ -6,6 +6,9 @@ import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Contact from './../Components/Contact'
 import Modal from '../Components/Modal'
 import ContactForm from './../Components/Form';
+import { contactReducer } from './../Reducers/contactReducer'
+import { INITIAL_CONTACTS } from './../constants'
+import { deleteContact, submitContact, deleteMultipleContact } from './../Actions/actionCreators'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,29 +31,7 @@ const PhoneBook = (props) => {
   const classes = useStyles()
 
   const [open, setOpen] = useState(false)
-  const [contacts, setContacts] = useState([
-    {
-      id: "111",
-      firstName: "Martin",
-      lastName: "Grill",
-      countryCode: "+1",
-      phone: "1234567890",
-    },
-    {
-      id: "222",
-      firstName: "John",
-      lastName: "Don",
-      countryCode: "+41",
-      phone: "9378628381",
-    },
-    {
-      id: "333",
-      firstName: "Ricky",
-      lastName: "Cage",
-      countryCode: "+12",
-      phone: "3245678902",
-    }
-  ])
+  const [contacts, dispatch] = useReducer(contactReducer, INITIAL_CONTACTS)
   const [isEdit, setIsEdit] = useState(false)
   const [oldContact, setOldContact] = useState({})
   const [checked, setChecked] = useState([]);
@@ -66,24 +47,15 @@ const PhoneBook = (props) => {
     handleOpen()
   }
 
-  const handleDelete = (id) => {
-    let data = contacts.filter((person) => {
-      return person.id !== id
-    });
+  const handleDelete = (id) => dispatch(deleteContact(id))
 
-    setContacts(() => [...data])
-  }
+
 
   const handleAddContact = (contact) => {
-    if (isEdit) {
-      const updatedContact = contacts.filter((person) => {
-        return person.id !== contact.id
-      });
-
-      setContacts(() => [...updatedContact, contact])
-    } else {
-      setContacts(() => [...contacts, contact])
-    }
+    dispatch(submitContact({
+      isEdit,
+      contact
+    }))
 
     handleClose()
   }
@@ -97,18 +69,7 @@ const PhoneBook = (props) => {
     setOldContact({})
   }
 
-  const deleteMultipleContacts = () => {
-
-    let data = contacts.filter((person) => {
-      return !checked.includes(person.id)
-    })
-
-    console.log(data);
-
-
-    setContacts(() => [...data])
-
-  }
+  const deleteMultipleContacts = () => dispatch(deleteMultipleContact(checked))
 
   const handleToggle = value => {
     const newChecked = checked.filter((ch) => ch === value);
@@ -174,5 +135,6 @@ const PhoneBook = (props) => {
     </Container>
   )
 }
+
 
 export default PhoneBook
