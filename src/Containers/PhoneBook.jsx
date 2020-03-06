@@ -1,5 +1,5 @@
 import React, { useState, useReducer } from 'react'
-import { List, makeStyles, Container, Typography, Button } from '@material-ui/core'
+import { List, makeStyles, Container, Typography, Button, Paper } from '@material-ui/core'
 import DeleteIcon from '@material-ui/icons/Delete';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 
@@ -9,11 +9,15 @@ import ContactForm from './../Components/Form';
 import { contactReducer } from './../Reducers/contactReducer'
 import { INITIAL_CONTACTS } from './../constants'
 import { deleteContact, submitContact, deleteMultipleContact } from './../Actions/actionCreators'
+import Header from './../Components/Header'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
+    margin: "0 15vh",
+  },
+  paper: {
+    padding: theme.spacing(10, 3),
+
   },
   addIcon: {
     width: '40px',
@@ -23,7 +27,7 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    padding: '0 18px'
+    padding: '0 15%'
   }
 }))
 
@@ -69,70 +73,73 @@ const PhoneBook = (props) => {
     setOldContact({})
   }
 
-  const deleteMultipleContacts = () => dispatch(deleteMultipleContact(checked))
+  const deleteMultipleContacts = () => {
+    dispatch(deleteMultipleContact(checked))
+    setChecked([])
+  }
 
   const handleToggle = value => {
-    const newChecked = checked.filter((ch) => ch === value);
+    const newChecked = checked.filter((id) => id === value);
 
     if (newChecked.length) {
-      const l = checked.filter(ch => ch !== value)
-      setChecked(l)
+      setChecked(checked.filter(ch => ch !== value))
     } else {
       setChecked([...checked, value])
     }
   }
 
   return (
-    <Container maxWidth="sm">
-      <div className={classes.dFlex}>
-        <Typography
-          variant='h5'
-        >
-          Contact List
-      </Typography>
-        <Button onClick={handleOpen}>
-          <PersonAddIcon className={classes.addIcon} />
-        </Button>
-      </div>
-      <List className={classes.root}>
-        {contacts.map((contact, key) => {
-          return <Contact
-            key={key}
-            {...contact}
-            handleEdit={handleEdit}
-            handleDelete={handleDelete}
-            handleToggle={handleToggle}
-            checked={checked}
-          />
-        })}
-      </List>
-      {checked.length
-        ? (
-          <Button onClick={deleteMultipleContacts}>
-            <DeleteIcon />
-          </Button>
+    <div className={classes.root}>
+      <Header title='PHONE BOOK' />
+      <Paper elevation={4} className={classes.paper}>
 
-        )
-        : null
-      }
-      <Modal
-        title={'Add Contact Form'}
-        open={open}
-        handleOpen={handleOpen}
-        handleClose={handleClose}
-      >
-        <ContactForm
-          id={isEdit ? oldContact.id : ''}
-          firstName={isEdit ? oldContact.firstName : ''}
-          lastName={isEdit ? oldContact.lastName : ''}
-          countryCode={isEdit ? oldContact.countryCode : ''}
-          phone={isEdit ? oldContact.phone : ''}
-          submitActionText={isEdit ? 'Update' : 'Submit'}
-          handleAddContact={handleAddContact}
-          isEdit={isEdit}
-        />
-      </Modal>
-    </Container>
+        <div className={classes.dFlex}>
+          <Button onClick={handleOpen}>
+            <PersonAddIcon className={classes.addIcon} />
+          </Button>
+          {checked.length
+            ? (
+              <Button onClick={deleteMultipleContacts}>
+                <DeleteIcon /> Delete Multiple
+              </Button>
+
+            )
+            : null
+          }
+        </div>
+        <List className={classes.root}>
+          {contacts.map((contact, key) => {
+            return <Contact
+              key={key}
+              {...contact}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+              handleToggle={handleToggle}
+              checked={checked}
+            />
+          })}
+        </List>
+
+        <Modal
+          title={'Add Contact Form'}
+          open={open}
+          handleOpen={handleOpen}
+          handleClose={handleClose}
+        >
+          <ContactForm
+            id={isEdit ? oldContact.id : ''}
+            firstName={isEdit ? oldContact.firstName : ''}
+            lastName={isEdit ? oldContact.lastName : ''}
+            countryCode={isEdit ? oldContact.countryCode : ''}
+            phone={isEdit ? oldContact.phone : ''}
+            submitActionText={isEdit ? 'Update' : 'Submit'}
+            handleAddContact={handleAddContact}
+            isEdit={isEdit}
+          />
+        </Modal>
+
+      </Paper>
+    </div>
   )
 }
 
