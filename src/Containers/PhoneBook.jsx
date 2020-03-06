@@ -1,11 +1,11 @@
 import React, { useState, useReducer } from 'react'
-import { List, makeStyles, Container, Typography, Button, Paper } from '@material-ui/core'
-import DeleteIcon from '@material-ui/icons/Delete';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import { List, makeStyles, Button, Paper } from '@material-ui/core'
+import DeleteIcon from '@material-ui/icons/Delete'
+import PersonAddIcon from '@material-ui/icons/PersonAdd'
 
 import Contact from './../Components/Contact'
 import Modal from '../Components/Modal'
-import ContactForm from './../Components/Form';
+import ContactForm from './../Components/Form'
 import { contactReducer } from './../Reducers/contactReducer'
 import { INITIAL_CONTACTS } from './../constants'
 import { deleteContact, submitContact, deleteMultipleContact } from './../Actions/actionCreators'
@@ -31,7 +31,7 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 
-const PhoneBook = (props) => {
+const PhoneBook = () => {
   const classes = useStyles()
 
   const [open, setOpen] = useState(false)
@@ -53,14 +53,11 @@ const PhoneBook = (props) => {
 
   const handleDelete = (id) => dispatch(deleteContact(id))
 
-
-
   const handleAddContact = (contact) => {
     dispatch(submitContact({
       isEdit,
       contact
     }))
-
     handleClose()
   }
 
@@ -102,7 +99,6 @@ const PhoneBook = (props) => {
               <Button onClick={deleteMultipleContacts}>
                 <DeleteIcon /> Delete Multiple
               </Button>
-
             )
             : null
           }
@@ -127,11 +123,11 @@ const PhoneBook = (props) => {
           handleClose={handleClose}
         >
           <ContactForm
-            id={isEdit ? oldContact.id : ''}
-            firstName={isEdit ? oldContact.firstName : ''}
-            lastName={isEdit ? oldContact.lastName : ''}
-            countryCode={isEdit ? oldContact.countryCode : ''}
-            phone={isEdit ? oldContact.phone : ''}
+            id={oldContact.id || ''}
+            firstName={oldContact.firstName || ''}
+            lastName={oldContact.lastName || ''}
+            countryCode={oldContact.countryCode || ''}
+            phone={oldContact.phone || ''}
             submitActionText={isEdit ? 'Update' : 'Submit'}
             handleAddContact={handleAddContact}
             isEdit={isEdit}
@@ -142,6 +138,5 @@ const PhoneBook = (props) => {
     </div>
   )
 }
-
 
 export default PhoneBook

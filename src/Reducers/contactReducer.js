@@ -27,7 +27,7 @@ export const contactReducer = (state = INITIAL_CONTACTS, action) => {
       })
 
       return data
-    };
+    }
 
     case DELETE_MULTIPLE_CONTACT: {
       console.log(action)
@@ -42,4 +42,3 @@ export const contactReducer = (state = INITIAL_CONTACTS, action) => {
       return state
   }
 }
-

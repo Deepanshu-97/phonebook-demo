@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles, Typography } from '@material-ui/core'
+import PropTypes from 'prop-types'
 
 const useStyles = makeStyles(theme => ({
   header: {
@@ -25,6 +26,10 @@ const Header = ({ title }) => {
     </Typography>
 
   )
+}
+
+Header.propTypes = {
+  title: PropTypes.string
 }
 
 export default Header

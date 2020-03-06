@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Button, Grid, Card, Typography, makeStyles } from '@material-ui/core';
-import PropTypes from 'prop-types';
+import React, { useState } from 'react'
+import { Button, Grid, Card, Typography, makeStyles } from '@material-ui/core'
+import PropTypes from 'prop-types'
 
-import InputField from './InputField';
+import InputField from './InputField'
 import { getRandomString } from './../Utils'
 import { validateContact } from './../validations'
 
@@ -46,7 +46,7 @@ const ContactForm = ({
   const [phoneValue, setPhoneValue] = useState(phone)
   const [errors, setErrors] = useState({})
 
-  const onSubmit = (event) => {
+  const onSubmit = () => {
     const contact = {
       id: id || getRandomString(),
       firstName: firstNameValue,

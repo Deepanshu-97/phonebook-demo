@@ -1,12 +1,17 @@
-import React from 'react';
-import { TextField, Typography } from '@material-ui/core';
+import React from 'react'
+import { TextField, Typography } from '@material-ui/core'
+import PropTypes from 'prop-types'
 
-const InputField = ({ error, maxSize, ...props }) => (
+const InputField = ({ error, ...props }) => (
   <>
     <TextField {...props} />
     {error &&
       <Typography color="error">{error}</Typography>}
   </>
-);
+)
 
-export default InputField;
+InputField.propTypes = {
+  error: PropTypes.string,
+}
+
+export default InputField

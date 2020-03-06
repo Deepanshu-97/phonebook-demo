@@ -1,4 +1,8 @@
-import { SUBMIT_CONTACT, DELETE_CONTACT, DELETE_MULTIPLE_CONTACT } from './actionTypes'
+import {
+  SUBMIT_CONTACT,
+  DELETE_CONTACT,
+  DELETE_MULTIPLE_CONTACT
+} from './actionTypes'
 
 // contacts action creators
 export const submitContact = (contact) => {
