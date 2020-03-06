@@ -1,4 +1,9 @@
-import { INVALID_COUNTRY_CODE, INVALID_LAST_NAME, INVALID_FIRST_NAME, INVALID_PHONE } from './constants';
+import {
+  INVALID_COUNTRY_CODE,
+  INVALID_LAST_NAME,
+  INVALID_FIRST_NAME,
+  INVALID_PHONE
+} from './constants';
 
 export const validateContact = values => {
   const errors = {};
@@ -13,8 +18,8 @@ export const validateContact = values => {
       errors[field] = `Please Enter ${field}`
     }
   });
-  if (values.phone && !values.phone.match(/\d{10}/)) {
-    errors.phoneNumber = INVALID_PHONE
+  if (values.phone && !values.phone.match(/^\d{10}$/)) {
+    errors.phone = INVALID_PHONE
   }
   if (values.firstName && !values.firstName.match(/[a-zA-Z_]/)) {
     errors.firstName = INVALID_FIRST_NAME
